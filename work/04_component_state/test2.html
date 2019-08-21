@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>04_component_state</title>
+  <style>
+    .classA {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 
@@ -22,19 +27,12 @@
   // 1. 定义组件
   class Like extends React.Component {
 
-    constructor (props) {
-      super(props)
-
-      // 初始状态化state
-      this.state = {
-        isLikeMe: false
-      }
-
-      // 通过bind来指定自定义的组件内的函数为组件对象(this默认是undefined)
-      this.handleClick = this.handleClick.bind(this)
+    // 初始状态化state
+    state = {
+       isLikeMe: false
     }
 
-    handleClick () {
+    handleClick = () => {
       console.log('handleClick()', this)
       // Cannot read property 'state' of undefined
       // this.state.isLikeMe = !this.state.isLikeMe  // 不能直接修改状态数据
@@ -47,10 +45,11 @@
 
     // 重写方法
     render () {
+      console.log('render()')
       // 读取状态数据
       const { isLikeMe } = this.state
       const text = isLikeMe ? '你喜欢我2' : '我喜欢你2'
-      return <h2 onClick={this.handleClick}>{ text }</h2>
+      return <h2 className="classA" style={{fontSize: 20}} onClick={this.handleClick}>{ text }</h2>
     }
   }
 
