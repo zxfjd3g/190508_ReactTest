@@ -14,6 +14,35 @@
   <script type="text/javascript" src="../js/babel.min.js"></script>
 
   <script type="text/babel">
+    // 1. 定义组件
+
+    // 函数组件
+    function MyComponent1() {
+      console.log('MyComponent1()', this)
+      return <h1>函数组件</h1>
+    }
+
+    // 类组件
+    class MyComponent2 extends React.Component {
+
+      render () {
+        console.log('render()', this instanceof MyComponent2, this)
+        return <h1>类组件</h1>
+      }
+    }
+
+    console.log('----', typeof MyComponent2 ==='function')
+
+    // 2. 渲染组件标签
+    ReactDOM.render(<MyComponent1 />, document.getElementById('example1'))
+    ReactDOM.render(<MyComponent2 />, document.getElementById('example2'))
+
+
+    /* 
+    类对象: 将类作为对象使用
+    类的实例对象: 
+     */
+
   </script>
 </body>
 </html>
