@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>07_components_composing</title>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/prop-types.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<script type="text/babel">
+  /*
+  1)拆分组件: 拆分界面,抽取组件
+  2)实现静态组件: 使用组件实现静态页面效果
+  3)实现动态组件
+      ① 动态显示初始化数据
+      ② 交互功能(从绑定事件监听开始)
+   */
+  // 应用组件
+  class App extends React.Component {
+
+    // 初始化状态
+    state = {
+      todos: ['吃饭', '睡觉', '打豆豆']
+    }
+
+    add = (todo) => {
+      const todos = [...this.state.todos]
+      todos.unshift(todo)
+      //更新状态
+      this.setState({todos})
+    }
+
+    render() {
+      const {todos} = this.state
+      return (
+        <div>
+          <TodoAdd add={this.add} count={todos.length}/>
+          <TodoList todos={todos}/>
+        </div>
+      )
+    }
+  }
+
+  // 添加todo组件
+  class TodoAdd extends React.Component {
+    static propTypes = {
+      add: PropTypes.func.isRequired,
+      count: PropTypes.number.isRequired
+    }
+
+    addTodo = () => {
+      // 读取输入数据
+      const text = this.refs.todo.value.trim()
+      // 查检
+      if (!text) {
+        return
+      }
+      // 保存到todos
+      this.props.add(text)
+      // 清除输入
+      this.refs.todo.value = ''
+    }
+
+    render() {
+      return (
+        <div>
+          <h2>Simple TODO List</h2>
+          <input type="text" ref='todo'/>
+          <button onClick={this.addTodo}>Add #{this.props.count}</button>
+        </div>
+      )
+    }
+  }
+
+  // todo列表组件
+  class TodoList extends React.Component {
+
+    static propTypes = {
+      todos: PropTypes.array.isRequired
+    }
+
+    render() {
+      const {todos} = this.props
+      return (
+        <ul>
+          {
+            todos.map((todo, index) => <li key={index}>{todo}</li>)
+          }
+        </ul>
+      )
+    }
+  }
+
+  // 渲染应用组件标签
+  ReactDOM.render(<App/>, document.getElementById('example'))
+
+</script>
+</body>
+</html>
