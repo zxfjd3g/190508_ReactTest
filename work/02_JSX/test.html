@@ -8,5 +8,36 @@
   <div id="test1"></div>
   <div id="test2"></div>
 
+
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script>
+    // 创建虚拟DOM元素对象(不使用jsx)
+    // <h1 id="xxx"><h2></h2></h1>
+    let myId = 'atguigu'
+    let text = 'tom....'
+    const h1 = React.createElement('h1', {id: myId}, text)
+    // 渲染虚拟DOM元素对象
+    ReactDOM.render(h1, document.getElementById('test1'))
+  </script>
+
+  <script type="text/babel">
+    // 创建虚拟DOM元素对象(使用jsx)
+    const h2 = <h2 id={myId}>{text}</h2>
+    debugger
+    console.log('h2', h2)
+    // 渲染虚拟DOM元素对象
+    ReactDOM.render(h2, document.getElementById('test2'))
+
+    const test2 = document.getElementById('test2')
+
+
+    /* 
+    虚拟DOM对象: 一般的Object实例对象, 不是真实DOM对象, 但跟真实DOM对应
+          虚拟DOM对象是一个轻量级(较轻)对象, 真实DOM是重量级(较重)对象
+          重新虚拟DOM不会立即更新界面, 更新真实DOM会立即更新界面
+    */
+  </script>
 </body>
 </html>

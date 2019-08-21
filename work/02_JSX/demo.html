@@ -15,7 +15,21 @@
   <script type="text/babel">
     /*
      功能: 动态展示列表数据
+      根据数据的数组生成标签的数组: 使用数组的map()
      */
+     const names = ['A', 'B', 'C', 'D'] // 数据的数组
+
+      // 1. 创建虚拟DOM
+      const ul = (
+        <ul>
+          {
+            names.map((name, index) => <li key={index}>{name}</li>)
+          }
+        </ul>
+      )
+      // 2. 渲染到页面
+       ReactDOM.render(ul, document.getElementById('example1'))
+
   </script>
 </body>
 </html>
