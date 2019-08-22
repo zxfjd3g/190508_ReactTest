@@ -8,8 +8,12 @@
 
 <div id="example1"></div>
 
+<hr>
+<div id="example2"></div>
+
 <script type="text/javascript" src="../js/react.development.js"></script>
 <script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/prop-types.js"></script>
 <script type="text/javascript" src="../js/babel.min.js"></script>
 
 <script type="text/babel">
@@ -18,8 +22,72 @@
 需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
   1). 如果性别没有指定, 默认为男
   2). 如果年龄没有指定, 默认为18
+  3). 姓名必须指定
   */
+  function Person2(props) {
+    return (
+      <ul>
+        <li>姓名: {props.name}</li>
+        <li>性别: {props.sex}</li>
+        <li>年龄: {props.age}</li>
+      </ul>
+    )
+  }
 
+  class Person extends React.Component {
+
+    static propTypes = {
+      name: PropTypes.string.isRequired, // 类型为string且是必须的
+      sex: PropTypes.string,
+      age: PropTypes.number,
+    }
+
+    static defaultProps = {
+      sex: '男',
+      age: 18
+    }
+
+
+    render () {
+      return (
+        <ul>
+          <li>姓名: {this.props.name}</li>
+          <li>性别: {this.props.sex}</li>
+          <li>年龄: {this.props.age}</li>
+        </ul>
+      )
+    }
+  }
+  // 限定属性: 属性名/属性值的类型/属性的必要性
+  // Person.propTypes = {
+  //   name: PropTypes.string.isRequired,   // 类型为string且是必须的
+  //   sex: PropTypes.string,
+  //   age: PropTypes.number,
+  // }
+
+  // 指定属性的默认值
+  // Person.defaultProps = {
+  //   sex: '男',
+  //   age: 18
+  // }
+
+  
+
+  const p = {
+    name: 'tom',
+    sex: '男',
+    age: 12
+  }
+
+  // ReactDOM.render(<Person2 name={p.name} sex={p.sex} age={p.age}/>, document.getElementById('example1'))
+  ReactDOM.render(<Person2 {...p}/>, document.getElementById('example1'))
+
+  const p2 = {
+    name: 'tom2',
+    sex: '女',
+    age: 13
+  }
+  ReactDOM.render(<Person name={p2.name}/>, document.getElementById('example2'))
 </script>
 </body>
 </html>

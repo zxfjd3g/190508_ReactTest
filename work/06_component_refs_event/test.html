@@ -19,6 +19,27 @@
       2. 点击按钮, 提示第一个输入框中的值
       3. 当第2个输入框失去焦点时, 提示这个输入框中的值
    */
+
+    class MyComponent extends React.Component {
+
+      hint = () => {
+        // alert('hint()')
+        // console.log('hint()', this)
+        alert(this.refs.content.value)
+      }
+
+      render () {
+        return (
+          <div>
+            <input type="text" ref="content"/>  &nbsp;
+            <button onClick={this.hint}>提示</button>&nbsp;
+            <input type="text" />  
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<MyComponent/>, document.getElementById('example'))
   </script>
 </body>
 </html>
