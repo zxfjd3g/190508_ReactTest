@@ -115,3 +115,54 @@
 	    this.state.stateName1
 	4. 更新状态-->更新界面 : 
 	    this.setState({stateName1 : newValue})
+
+## 2.2. 组件的3大属性: props
+	包含所有组件标签的属性的集合对象
+	在组件内部读取属性值(可能是函数): this.props.propertyName
+	作用: 从目标组件外部向组件内部传递数据(只读)
+	限制props的属性名/属性值类型/必要性
+			Person.propTypes = {
+				name: React.PropTypes.string.isRequired,
+				age: React.PropTypes.number
+			}
+	限定props的属性默认值
+			Person.defaultProps = {
+				age: 18,
+			}
+	将对象的所有属性通过props传递
+	    <Person {...person}/>
+
+## 2.3. 组件的3大属性: refs
+	是什么: 组件内包含ref属性的标签元素的集合对象
+	作用: 找到组件内部的真实dom元素对象, 进而操作它
+	使用方法(老的):
+			给操作目标标签指定ref属性, 打一个名称标识
+			获得标签对象: this.refs.refName
+	使用方法(新的)
+			1). 创建一个ref容器, 并保存到组件对象上
+			2). 将ref容器交给要标识的标签, 内部就会将标签对象保存到ref容器中
+			3). 通过ref容器的current属性得到标识对象
+
+## 2.4. 组件中的事件处理
+	1. 给标签添加属性: onXxx={this.eventHandler}
+	2. 在组件中添加事件处理方法
+	    eventHandler = (event) => {
+	                
+	    }
+	3. 使自定义方法中的this为组件对象
+	  	在constructor()中bind(this)
+	  	使用箭头函数定义方法
+	4. 事件监听
+			绑定事件监听
+				事件名
+				回调函数
+			触发事件
+				事件名
+				数据
+
+## 2.5. 组件的组合使用
+	1. 拆分组件: 拆分界面,抽取组件
+	2. 实现静态组件: 使用组件实现静态页面效果
+	3. 实现动态组件
+			动态显示初始化数据
+			交互功能(从绑定事件监听开始)

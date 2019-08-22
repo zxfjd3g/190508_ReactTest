@@ -36,30 +36,28 @@
    */
   class LoginForm extends React.Component {
 
+    usernameRef = React.createRef()
+    pwdRef = React.createRef()
+
     handleSubmit = (event) => {
       // 阻止事件的默认行为: 提交表单
       event.preventDefault()
 
       // 手动读取输入框的值
-      const username = this.refs.username.value
-      const pwd = this.refs.pwd.value
+      const username = this.usernameRef.current.value
+      const pwd = this.pwdRef.current.value
 
       alert(`准备提交的用户名为: ${username}, 密码:${pwd}`)
     }
-
 
     render() {
 
       return (
         <form onSubmit={this.handleSubmit} action="/test">
-          <label>
-            用户名:
-            <input type="text" ref="username"/>
-          </label>&nbsp;
-          <label>
-            密码:
-            <input type="password" ref="pwd"/>
-          </label>&nbsp;
+          <label>用户名:</label>
+          <input type="text" ref={this.usernameRef}/>&nbsp;
+          <label>密码:</label>
+          <input type="password" ref={this.pwdRef}/>&nbsp;
           <input type="submit" value="登陆"/>
         </form>
       )
@@ -77,7 +75,6 @@
       username: '',
       pwd: ''
     }
-
 
     /*
     在输入过程中实时的更新到状态数据
@@ -108,14 +105,10 @@
 
       return (
         <form onSubmit={this.handleSubmit} action="/test">
-          <label>
-            用户名:
-            <input type="text" value={this.state.username} onChange={this.handleNameChange}/>
-          </label>&nbsp;
-          <label>
-            密码:
-            <input type="password" value={this.state.pwd} onChange={this.handlePwdChange}/>
-          </label>&nbsp;
+          <label>用户名: </label>
+          <input type="text" value={this.state.username} onChange={this.handleNameChange}/> &nbsp;
+          <label>密码: </label>
+          <input type="password" value={this.state.pwd} onChange={this.handlePwdChange}/>&nbsp;
           <input type="submit" value="登陆"/>
         </form>
       )
