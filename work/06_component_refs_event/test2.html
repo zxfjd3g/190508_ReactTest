@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>06_component_refs_event</title>
+</head>
+<body>
+<br>
+  <div id="example"></div>
+
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    /*
+    需求: 自定义组件, 功能说明如下:
+      1. 界面如果页面所示
+      2. 点击按钮, 提示第一个输入框中的值
+      3. 当第2个输入框失去焦点时, 提示这个输入框中的值
+   */
+
+   /* 
+   1. 创建一个ref容器, 并保存到组件对象上
+   2. 将ref容器交给要标识的标签, 内部就会将标签对象保存到ref容器中
+   3. 通过ref容器的current属性得到标识对象
+   */
+
+    class MyComponent extends React.Component {
+
+      constructor (props) {
+        super(props)
+
+        // 1. 创建一个ref容器
+        this.myRef = React.createRef()
+      }
+
+      hint = () => {
+        // alert('hint()')
+        // console.log('hint()', this)
+        const input = this.myRef.current
+        alert(input.value)
+      }
+
+      handleBlur = (event, msg) => {
+        alert(event.target.value + '--' + msg)
+      }
+
+      render () {
+        return (
+          <div>
+            <input type="text" ref={this.myRef} /> &nbsp;
+            <button onClick={this.hint}>提示</button>&nbsp;
+            <input type="text" onBlur={event => this.handleBlur(event, 'atguigu')}/>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<MyComponent/>, document.getElementById('example'))
+  </script>
+</body>
+</html>

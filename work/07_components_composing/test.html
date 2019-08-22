@@ -12,7 +12,107 @@
   <script type="text/javascript" src="../js/react-dom.development.js"></script>
   <script type="text/javascript" src="../js/prop-types.js"></script>
   <script type="text/javascript" src="../js/babel.min.js"></script>
+
+  <!-- 
+    组件化编程的基本流程
+      1. 拆分组件
+        App
+          Add
+          List
+      2. 静态组件 ===> 静态页面
+
+      3. 动态组件
+          1). 动态显示初始化数据
+          2). 交互
+
+    设计数据
+      1. 类型: Array
+      2. 名称: todos
+      3. 哪个组件的状态?  看是哪个组件(它)需要还是哪些组件需要(共同的父组件)
+   -->
   <script type="text/babel">
+    // 应用根组件
+    class App  extends React.Component {
+      state = {
+        todos: ['吃饭', '睡觉', '打代码']
+      }
+
+      /* 
+      添加todo
+      */
+      addTodo = (todo) => {
+        // 取出todos状态
+        const todos = this.state.todos
+        /* todos.unshift(todo) // 直接修改了原来的状态数据todos
+        this.setState({
+          todos
+        }) */
+        this.setState({
+          todos: [todo, ...todos]  // 没有直接修改原本的状态数据todos
+        })
+      }
+
+      render() {
+        const {todos} = this.state
+        return (
+          <div>
+            <h1>TODO LIST</h1>
+            <Add size={todos.length} addTodo={this.addTodo} />
+            <List todos={todos} />
+          </div>
+        )
+      }
+    }
+    // TODO添加组件
+    class Add  extends React.Component {
+
+      static propTypes = {
+        size: PropTypes.number.isRequired,
+        addTodo: PropTypes.func.isRequired
+      }
+
+      add = () => {
+        // 得到输入的todo
+        const todo = this.refs.todo.value.trim()
+        // 检查
+        if (!todo) {
+          this.refs.todo.value = ''
+          this.refs.todo.focus()
+          return
+        }
+        // 添加到todos
+        this.props.addTodo(todo)
+        // 清除输入数据
+        this.refs.todo.value = ''
+      }
+
+      render() {
+        const { size } = this.props
+        return (
+          <div>
+            <input type="text" ref="todo"/>
+            <button onClick={this.add}>Add #{ size }</button>
+          </div>
+        )
+      }
+    }
+
+    // TODO列表组件
+    function List (props) {
+      return (
+        <ul>
+          {
+            props.todos.map((todo, index) => <li key={index}>{todo}</li>)
+          }
+        </ul>
+      )
+    }
+    List.propTypes = {
+      todos: PropTypes.array.isRequired
+    }
+
+    // 渲染根组件标签
+    ReactDOM.render(<App/>, document.getElementById('example'))
 
   </script>
 </body>
