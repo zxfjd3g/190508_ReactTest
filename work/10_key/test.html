@@ -25,7 +25,40 @@
               item数据没变, 直接使用原来的真实DOM
               item数据变了, 对原来的真实DOM进行数据更新
           b. key变了
-              销毁原来的真实DOM, 根据item数据创建新的真实DOM显示(即使item数据没有变)
+              多出的key: 根据item数据创建新的真实DOM显示(即使item数据没有变)
+              少的key: 原来的真实DOM就会被销毁
+
+      [
+        0--{name: tom}
+        1--{name: Jack}
+      ]
+
+      [
+        0--{name: Jack}
+      ]
+
+      [
+        0--{name: Bob}
+        1--{name: tom}
+        2--{name: Jack}
+      ]
+
+
+      [
+        1--{name: tom}
+        2--{name: Jack}
+      ]
+
+      [
+        2--{name: Jack}
+      ]
+
+
+      [
+        3--{name: Bob}
+        1--{name: tom}
+        2--{name: Jack}
+      ]
    2. key为index的问题
       1). 添加/删除/排序 => 产生没有必要的真实DOM更新 ==> 界面效果没问题, 但效率低
       2). 如果item界面还有输入框 => 产生错误的真实DOM更新 ==> 界面有问题
