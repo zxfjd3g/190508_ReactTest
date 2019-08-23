@@ -5,8 +5,8 @@
   <title>08_component_form</title>
 </head>
 <body>
-<!-- 
-  <form>
+
+ <!--  <form>
     <label>用户名:</label>
     <input type="text"/>&nbsp;
     <label>密码:</label>
@@ -36,6 +36,80 @@
       2. 输入用户名密码后, 点击登陆提示输入信息
       3. 不提交表单
     */
+
+    /* 
+    受控组件: Form组件中的表单项输入数据在输入过程实时收集到state
+    非受控组件: Form组件中的表单项输入数据时不收集, 点击提交按钮时才读取
+     */
+    class FormComp extends React.Component {
+
+      usernameRef = React.createRef()
+      pwdRef = React.createRef()
+
+      login = (event) => {
+        // 阻止事件的默认行为(不提交表单)
+        event.preventDefault()
+       
+        // 收集输入数据, 准备发ajax请求
+        const username = this.usernameRef.current.value
+        const pwd = this.pwdRef.current.value
+        alert(`发登陆的ajax请求username=${username},pwd=${pwd}`)
+      }
+
+      render() {
+        return (
+          <form onSubmit={this.login}>
+            <label>用户名:</label>
+            <input type="text" ref={this.usernameRef}/>&nbsp;
+            <label>密码:</label>
+            <input type="password" ref={this.pwdRef}/>&nbsp;
+            <input type="submit" value="登陆"/>
+          </form>
+        )
+      }
+    }
+
+    class FormComp2 extends React.Component {
+
+      state = {
+        username: 'admin',
+        pwd: '123'
+      }
+
+      login = (event) => {
+        // 阻止事件的默认行为(不提交表单)
+        event.preventDefault()
+        // 直接从state中取出, 准备发ajax请求
+        const {username, pwd} = this.state
+        alert(`发登陆的ajax请求username=${username},pwd=${pwd}`)
+      }
+
+      handleChange = (event, name) => {
+        // 读取输入数据
+        const value = event.target.value
+        // 更新状态数据
+        this.setState({
+          [name]: value   // 如何将变量的值作为属性名
+        })
+      }
+
+      render() {
+        const {username, pwd} = this.state
+        return (
+          <form onSubmit={this.login}>
+            <label>用户名:</label>
+            <input type="text" value={username} onChange={event => this.handleChange(event, 'username')}/>&nbsp;
+            <label>密码:</label>
+            <input type="password" value={pwd} onChange={event => this.handleChange(event, 'pwd')}/>&nbsp;
+            <input type="submit" value="登陆"/>
+          </form>
+        )
+      }
+    }
+
+    ReactDOM.render(<FormComp/>, document.getElementById('example1'))
+    ReactDOM.render(<FormComp2/>, document.getElementById('example2'))
+
   </script>
 </body>
 </html>

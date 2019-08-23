@@ -122,8 +122,8 @@
 	作用: 从目标组件外部向组件内部传递数据(只读)
 	限制props的属性名/属性值类型/必要性
 			Person.propTypes = {
-				name: React.PropTypes.string.isRequired,
-				age: React.PropTypes.number
+				name: PropTypes.string.isRequired,
+				age: PropTypes.number
 			}
 	限定props的属性默认值
 			Person.defaultProps = {
@@ -141,7 +141,7 @@
 	使用方法(新的)
 			1). 创建一个ref容器, 并保存到组件对象上
 			2). 将ref容器交给要标识的标签, 内部就会将标签对象保存到ref容器中
-			3). 通过ref容器的current属性得到标识对象
+			3). 通过ref容器的current属性得到标签对象
 
 ## 2.4. 组件中的事件处理
 	1. 给标签添加属性: onXxx={this.eventHandler}
@@ -152,7 +152,9 @@
 	3. 使自定义方法中的this为组件对象
 	  	在constructor()中bind(this)
 	  	使用箭头函数定义方法
-	4. 事件监听
+	4. 如果想向事件回调函数传递特定参数
+			onXxx={(event) => this.eventHandler(event, 'abc')}
+	5. 事件监听
 			绑定事件监听
 				事件名
 				回调函数

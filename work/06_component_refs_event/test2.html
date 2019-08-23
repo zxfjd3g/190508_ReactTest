@@ -28,12 +28,8 @@
 
     class MyComponent extends React.Component {
 
-      constructor (props) {
-        super(props)
-
-        // 1. 创建一个ref容器
-        this.myRef = React.createRef()
-      }
+      // 1. 创建一个ref容器
+      myRef = React.createRef()
 
       hint = () => {
         // alert('hint()')
