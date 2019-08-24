@@ -171,9 +171,12 @@
 
 ## 2.6. 组件收集表单数据
 	1. 受控组件: Form组件中的表单项输入数据在输入过程实时收集到state
+			设计状态保存数据
+			绑定Change监听, 当输入改变时在回调中将最新输入的值保存到状态中
 	2. 非受控组件: Form组件中的表单项输入数据时不收集, 点击提交按钮时才读取
+			利用ref标识输入框, 从而得到输入的值
 
-## 2.7. 组件的生命周期
+## 2.7. 组件的生命周期(回调函数/勾子)
 	1. 组件的三个生命周期状态:
 		Mount：插入真实 DOM
 		Update：被重新渲染
@@ -191,9 +194,10 @@
 		卸载组件: ReactDOM.unmountComponentAtNode(div)
 			componentWillUnmount() : 组件将要被卸载
 	3. 常用的方法
-		render(): 必须重写, 返回一个自定义的虚拟DOM
+			render(): 必须重写, 返回一个自定义的虚拟DOM
 	  	constructor(): 初始化状态(state={}), 绑定this(可以箭头函数代替)
-	  	componentDidMount() : 只执行一次, 已经在dom树中, 适合启动/设置一些监听
+	  	componentDidMount() : 只执行一次, 已经在dom树中, 执行异步任务: 启动定时器/发ajax请求
+			componentWillUnmount(): 做收尾工作: 清除定时器
 
 
 ## 2.8. 列表key的问题
