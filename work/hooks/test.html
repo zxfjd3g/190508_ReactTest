@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>04_component_state</title>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+  /*
+  需求: 自定义组件, 功能说明如下
+    1. 显示h2标题, 初始文本为: 你喜欢我
+    2. 点击标题更新为: 我喜欢你
+  */
+
+  // 1. 定义组件
+  function Like(props) {
+    
+    const [likeMe, setLikeMe] = React.useState(false)
+
+    function handleClick() {
+      setLikeMe(!likeMe)
+    }
+
+    const text = likeMe ? '你喜欢我2' : '我喜欢你2'
+    return <h2 onClick={handleClick}>{ text }</h2>
+  }
+
+
+  // 2. 渲染组件标题
+  ReactDOM.render(<Like/>, document.getElementById('example'))
+
+  /* 
+  设计状态数据?
+  1. 类型: 布尔, 初始值为false
+  2. 名称: isLikeMe 
+  */
+</script>
+</body>
+</html>
+
