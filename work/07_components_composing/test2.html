@@ -32,70 +32,54 @@
    -->
   <script type="text/babel">
     // 应用根组件
-    class App  extends React.Component {
-      state = {
-        todos: ['吃饭', '睡觉', '打代码']
-      }
+    function App() {
 
-      /* 
-      添加todo
-      */
-      addTodo = (todo) => {
-        // 取出todos状态
-        const todos = this.state.todos
-        /* todos.unshift(todo) // 直接修改了原来的状态数据todos
-        this.setState({
-          todos
-        }) */
-        this.setState({
-          todos: [todo, ...todos]  // 没有直接修改原本的状态数据todos
-        })
-      }
+      const [todos, setTodos] = React.useState(['吃饭', '睡觉', '打代码'])
+      console.log('todos', todos)
 
-      render() {
-        const {todos} = this.state
-        return (
-          <div>
-            <h1>TODO LIST</h1>
-            <Add size={todos.length} addTodo={this.addTodo} />
-            <List todos={todos} />
-          </div>
-        )
+      function addTodo(todo) {
+        setTodos([todo, ...todos])
       }
+      
+      return (
+        <div>
+          <h1>TODO LIST</h1>
+          <Add size={todos.length} addTodo={addTodo} />
+          <List todos={todos} />
+        </div>
+      )
     }
 
     // TODO添加组件
-    class Add  extends React.Component {
+    function Add(props) {
+      // 创建或得到已有的ref容器对象
+      const todoRef = React.useRef(null)
 
-      static propTypes = {
-        size: PropTypes.number.isRequired,
-        addTodo: PropTypes.func.isRequired
-      }
-
-      add = () => {
+      function add () {
         // 得到输入的todo
-        const todo = this.refs.todo.value.trim()
+        const todo = todoRef.current.value.trim()
         // 检查
         if (!todo) {
-          this.refs.todo.value = ''
-          this.refs.todo.focus()
+          todoRef.current.value = ''
+          todoRef.current.focus()
           return
         }
         // 添加到todos
-        this.props.addTodo(todo)
+        props.addTodo(todo)
         // 清除输入数据
-        this.refs.todo.value = ''
+        todoRef.current.value = ''
       }
-
-      render() {
-        const { size } = this.props
-        return (
-          <div>
-            <input type="text" ref="todo"/>
-            <button onClick={this.add}>Add #{ size }</button>
-          </div>
-        )
-      }
+      
+      return (
+        <div>
+          <input type="text" ref={todoRef}/>
+          <button onClick={add}>Add #{ props.size }</button>
+        </div>
+      )
+    }
+    Add.propTypes = {
+      size: PropTypes.number.isRequired,
+      addTodo: PropTypes.func.isRequired
     }
 
     // TODO列表组件

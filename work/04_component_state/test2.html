@@ -53,14 +53,20 @@
     }
   }
 
-  // 2. 渲染组件标题
-  ReactDOM.render(<Like/>, document.getElementById('example'))
+  function Like2(props) {
 
-  /* 
-  设计状态数据?
-  1. 类型: 布尔, 初始值为false
-  2. 名称: isLikeMe 
-  */
+    const [isLikeMe, setLikeMe] = React.useState(false)
+
+    function handleClick() {
+      setLikeMe(!isLikeMe)
+    }
+
+    const text = isLikeMe ? '你喜欢我2' : '我喜欢你2'
+    return <h2 style={{fontSize: 20}} onClick={handleClick}>{ text }</h2>
+  }
+
+  // 2. 渲染组件标题
+  ReactDOM.render(<Like2/>, document.getElementById('example'))
 </script>
 </body>
 </html>

@@ -19,16 +19,24 @@
     2. 点击标题更新为: 我喜欢你
   */
 
+  const {useState, useEffect} = React
+
   // 1. 定义组件
   function Like(props) {
     
-    const [likeMe, setLikeMe] = React.useState(false)
+    const [likeMe, setLikeMe] = useState(false)
+    const text = likeMe ? '你喜欢我2' : '我喜欢你2'
 
     function handleClick() {
       setLikeMe(!likeMe)
     }
 
-    const text = likeMe ? '你喜欢我2' : '我喜欢你2'
+    // 设置在render()之后执行的回调函数
+    useEffect(() => {
+      document.title = text
+    })
+
+   
     return <h2 onClick={handleClick}>{ text }</h2>
   }
 
